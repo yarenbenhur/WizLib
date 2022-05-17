@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WizLib_DataAccess.Data;
 
 namespace WizLib_DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220517124337_AddRelationCategoryAndBookTable")]
+    partial class AddRelationCategoryAndBookTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,7 +54,7 @@ namespace WizLib_DataAccess.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int>("Detail_Id")
+                    b.Property<int>("Category_Id")
                         .HasColumnType("int");
 
                     b.Property<string>("ISBN")
@@ -68,32 +70,24 @@ namespace WizLib_DataAccess.Migrations
 
                     b.HasKey("Book_Id");
 
-                    b.HasIndex("Detail_Id")
-                        .IsUnique();
+                    b.HasIndex("Category_Id");
 
                     b.ToTable("Books");
                 });
 
-            modelBuilder.Entity("WizLib_Model.Models.Detail", b =>
+            modelBuilder.Entity("WizLib_Model.Models.Category", b =>
                 {
-                    b.Property<int>("Detail_Id")
+                    b.Property<int>("Category_Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<string>("NumberOfChapters")
-                        .IsRequired()
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("NumberOfPages")
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("Category_Id");
 
-                    b.Property<double>("Weight")
-                        .HasColumnType("float");
-
-                    b.HasKey("Detail_Id");
-
-                    b.ToTable("Detail");
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("WizLib_Model.Models.Genre", b =>
@@ -137,18 +131,13 @@ namespace WizLib_DataAccess.Migrations
 
             modelBuilder.Entity("WizLib_Model.Models.Book", b =>
                 {
-                    b.HasOne("WizLib_Model.Models.Detail", "Detail")
-                        .WithOne("Book")
-                        .HasForeignKey("WizLib_Model.Models.Book", "Detail_Id")
+                    b.HasOne("WizLib_Model.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("Category_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Detail");
-                });
-
-            modelBuilder.Entity("WizLib_Model.Models.Detail", b =>
-                {
-                    b.Navigation("Book");
+                    b.Navigation("Category");
                 });
 #pragma warning restore 612, 618
         }

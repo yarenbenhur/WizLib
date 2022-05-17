@@ -20,6 +20,10 @@ namespace WizLib_Model.Models
         public double Price { get; set; }
         [NotMapped]
         public string PriceRange { get; set; }
+        [ForeignKey("Detail")]
+        public int Detail_Id { get; set; }
+
+        public Detail Detail{ get; set; }
 
 
     }
