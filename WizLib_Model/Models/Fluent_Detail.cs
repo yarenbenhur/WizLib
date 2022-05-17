@@ -7,15 +7,12 @@ using System.Threading.Tasks;
 
 namespace WizLib_Model.Models
 {
-    public class Detail
+    public class Fluent_Detail
     {
-        [Key]
         public int Detail_Id { get; set; }
-        [Required]
         public int NumberOfChapters { get; set; }
         public int NumberOfPages { get; set; }
         public double Weight { get; set; }
-        public Book Book { get; set; }
 
 
     }

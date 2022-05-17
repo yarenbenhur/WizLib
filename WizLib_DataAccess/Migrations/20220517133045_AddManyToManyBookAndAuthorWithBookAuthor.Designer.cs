@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WizLib_DataAccess.Data;
 
 namespace WizLib_DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220517133045_AddManyToManyBookAndAuthorWithBookAuthor")]
+    partial class AddManyToManyBookAndAuthorWithBookAuthor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -87,9 +89,17 @@ namespace WizLib_DataAccess.Migrations
                     b.Property<int>("Book_Id")
                         .HasColumnType("int");
 
+                    b.Property<int?>("Author_Id1")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Book_Id1")
+                        .HasColumnType("int");
+
                     b.HasKey("Author_Id", "Book_Id");
 
-                    b.HasIndex("Book_Id");
+                    b.HasIndex("Author_Id1");
+
+                    b.HasIndex("Book_Id1");
 
                     b.ToTable("BookAuthors");
                 });
@@ -101,39 +111,19 @@ namespace WizLib_DataAccess.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int>("NumberOfChapters")
-                        .HasColumnType("int");
+                    b.Property<string>("NumberOfChapters")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("NumberOfPages")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Weight")
-                        .HasColumnType("float");
-
-                    b.HasKey("Detail_Id");
-
-                    b.ToTable("Details");
-                });
-
-            modelBuilder.Entity("WizLib_Model.Models.Fluent_Detail", b =>
-                {
-                    b.Property<int>("Detail_Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<int>("NumberOfChapters")
-                        .HasColumnType("int");
-
-                    b.Property<int>("NumberOfPages")
-                        .HasColumnType("int");
+                    b.Property<string>("NumberOfPages")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Weight")
                         .HasColumnType("float");
 
                     b.HasKey("Detail_Id");
 
-                    b.ToTable("Fluent_Details");
+                    b.ToTable("Detail");
                 });
 
             modelBuilder.Entity("WizLib_Model.Models.Genre", b =>
@@ -198,15 +188,11 @@ namespace WizLib_DataAccess.Migrations
                 {
                     b.HasOne("WizLib_Model.Models.Author", "Author")
                         .WithMany("BookAuthors")
-                        .HasForeignKey("Author_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Author_Id1");
 
                     b.HasOne("WizLib_Model.Models.Book", "Book")
                         .WithMany("BookAuthors")
-                        .HasForeignKey("Book_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Book_Id1");
 
                     b.Navigation("Author");
 

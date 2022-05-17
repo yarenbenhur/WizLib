@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WizLib_DataAccess.Data;
 
 namespace WizLib_DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220517140429_AddFluentDetailsToDb")]
+    partial class AddFluentDetailsToDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -101,18 +103,19 @@ namespace WizLib_DataAccess.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int>("NumberOfChapters")
-                        .HasColumnType("int");
+                    b.Property<string>("NumberOfChapters")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("NumberOfPages")
-                        .HasColumnType("int");
+                    b.Property<string>("NumberOfPages")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Weight")
                         .HasColumnType("float");
 
                     b.HasKey("Detail_Id");
 
-                    b.ToTable("Details");
+                    b.ToTable("Detail");
                 });
 
             modelBuilder.Entity("WizLib_Model.Models.Fluent_Detail", b =>
@@ -122,11 +125,12 @@ namespace WizLib_DataAccess.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int>("NumberOfChapters")
-                        .HasColumnType("int");
+                    b.Property<string>("NumberOfChapters")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("NumberOfPages")
-                        .HasColumnType("int");
+                    b.Property<string>("NumberOfPages")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Weight")
                         .HasColumnType("float");

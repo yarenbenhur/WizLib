@@ -27,5 +27,7 @@ namespace WizLib_Model.Models
             }
 
         }
+        public ICollection<BookAuthor> BookAuthors { get; set; }
+
     }
 }
