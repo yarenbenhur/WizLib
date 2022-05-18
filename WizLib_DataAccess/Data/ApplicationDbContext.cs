@@ -44,7 +44,15 @@ namespace WizLib_DataAccess.Data
             modelBuilder.Entity<Fluent_Book>().Property(b=>b.ISBN).IsRequired().HasMaxLength(15);
             modelBuilder.Entity<Fluent_Book>().Property(b => b.Title).IsRequired();
             modelBuilder.Entity<Fluent_Book>().Ignore(b => b.PriceRange);
-            
+            //One to one rel book-detail
+            modelBuilder.Entity<Fluent_Book>()
+                .HasOne(b => b.Fluent_Detail)
+                .WithOne(b => b.Fluent_Book).HasForeignKey<Fluent_Book>("Detail_Id");
+            //One to many rel book-publisher
+            modelBuilder.Entity<Fluent_Book>()
+               .HasOne(b => b.Fluent_Publisher)
+               .WithMany(b => b.Fluent_Books).HasForeignKey(b => b.Publisher_Id);
+
             //Author
             modelBuilder.Entity<Fluent_Author>().HasKey(b => b.Author_Id);
             modelBuilder.Entity<Fluent_Author>().Property(b => b.FirstName).IsRequired();
@@ -60,8 +68,7 @@ namespace WizLib_DataAccess.Data
             modelBuilder.Entity<Fluent_Genre>().ToTable("tb_Fluent_Genre");
             modelBuilder.Entity<Fluent_Genre>().Property(b => b.GenreName).HasColumnName("Name");
 
-
-
+           
 
 
 

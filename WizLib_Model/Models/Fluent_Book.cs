@@ -13,10 +13,12 @@ namespace WizLib_Model.Models
         public int Book_Id { get; set; }
         public string Title { get; set; }
         public string ISBN { get; set; }
-
         public double Price { get; set; }
         public string PriceRange { get; set; }
-
+        public int Detail_Id { get; set; }
+        public Fluent_Detail Fluent_Detail { get; set; }
+        public int Publisher_Id { get; set; }
+        public Fluent_Publisher Fluent_Publisher { get; set; }
 
 
     }
