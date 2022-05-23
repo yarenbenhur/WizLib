@@ -32,7 +32,7 @@ namespace WizLib.Controllers
                 obj = _db.Categories.First(u => u.Category_Id == id);
                 return (obj == null) ? NotFound() : View(obj);
             }
-           
+
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -41,7 +41,7 @@ namespace WizLib.Controllers
 
             if (ModelState.IsValid)
             {
-                if (obj.Category_Id == 0 )
+                if (obj.Category_Id == 0)
                 {
                     _db.Categories.Add(obj);
                 }
@@ -60,6 +60,39 @@ namespace WizLib.Controllers
         {
             var objFromDb = _db.Categories.FirstOrDefault(u => u.Category_Id == id);
             _db.Categories.Remove(objFromDb);
+            _db.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
+        public IActionResult CreateMultiple2()
+        {
+            for (int i = 1; i <= 2; i++)
+            {
+                _db.Categories.Add(new Category { Name = Guid.NewGuid().ToString() });
+            }
+            _db.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
+        public IActionResult CreateMultiple5()
+        {
+            for (int i = 1; i <= 5; i++)
+            {
+                _db.Categories.Add(new Category { Name = Guid.NewGuid().ToString() });
+            }
+            _db.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult RemoveMultiple2()
+        {
+            IEnumerable<Category> catList = _db.Categories.OrderByDescending(u => u.Category_Id).Take(2).ToList();
+            _db.Categories.RemoveRange(catList);
+            _db.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
+        public IActionResult RemoveMultiple5()
+        {
+            IEnumerable<Category> catList = _db.Categories.OrderByDescending(u => u.Category_Id).Take(5).ToList();
+            _db.Categories.RemoveRange(catList);
             _db.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
