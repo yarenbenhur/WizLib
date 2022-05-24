@@ -24,10 +24,10 @@
                         Title
                     </th>
 
+                    <th>
+                        Publisher
+                    </th>
                     @*<th>
-                            Publisher
-                        </th>
-                        <th>
                             Authors
                         </th>*@
                     <th></th>
@@ -38,10 +38,10 @@
                         <td>
                             @item.Title
                         </td>
+                        <td>
+                            @item.Publisher.Name
+                        </td>
                         @*<td>
-                                @item.Publisher.Name
-                            </td>
-                            <td>
                                 @{
                                     var authors = "";
                                 }

@@ -1,0 +1,77 @@
+﻿@model WizLib_Model.ViewModel.BookVM
+@{
+    var title = "Edit Book Details";
+}
+<form method="post">
+    <div class="row p-3 border">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="Book.Book_Id" />
+        <input type="hidden" asp-for="Book.Detail.Detail_Id" />
+        @if (Model.Book == null || Model.Book.Book_Id != 0 || Model.Book.Detail.Detail_Id != 0)
+        {
+            //edit
+            title = "Create Book Details";
+        }
+        <div class="col-12 border-bottom">
+            <h2 class="text-primary">@title</h2>
+        </div>
+        <div class="col-8 pt-4">
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Book.Title"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Book.Title" disabled class="form-control" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Book.Detail.NumberOfChapters"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Book.Detail.NumberOfChapters" class="form-control" />
+                    <span asp-validation-for="Book.Detail.NumberOfChapters" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Book.Detail.NumberOfPages"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Book.Detail.NumberOfPages" class="form-control" />
+                    <span asp-validation-for="Book.Detail.NumberOfPages" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Book.Detail.Weight"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Book.Detail.Weight" class="form-control" />
+                    <span asp-validation-for="Book.Detail.Weight" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-4 offset-4">
+                    @if (Model.Book == null || Model.Book.Book_Id != 0 || Model.Book.Detail.Detail_Id != 0)
+                    {
+                        <button type="submit" class="btn btn-primary form-control">Update</button>
+                    }
+                    else
+                    {
+                        <button type="submit" class="btn btn-primary form-control">Create</button>
+                    }
+                </div>
+                <div class="col-4">
+                    <a asp-action="Index" class="btn btn-success form-control">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+
+}
