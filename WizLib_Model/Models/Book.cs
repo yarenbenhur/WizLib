@@ -21,7 +21,7 @@ namespace WizLib_Model.Models
         [NotMapped]
         public string PriceRange { get; set; }
         [ForeignKey("Detail")]
-        public int Detail_Id { get; set; }
+        public int? Detail_Id { get; set; }
 
         public Detail Detail{ get; set; }
         [ForeignKey("Publisher")]
